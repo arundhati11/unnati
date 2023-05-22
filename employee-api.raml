@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: employee-api
+baseUri: http://employee-api/{version}
+version: v1
+protocols: [http, https]
+
+securitySchemes:
+  standardSecurity: !include /securitySchemes/standardSecurity.raml
+  customSecurity: !include /securitySchemes/customSecurity.raml
+
+/employees:
+  securedBy: standardSecurity
+  get:
+    description: Get details of all the employees
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include /jsonExamples/getEmployeesResponse.json
+  /{employeeId}:
+    securedBy: customSecurity
+    get: 
+      description: Retrieve details of a single employee
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include /jsonExamples/getDetailsByEmployeeId.json
